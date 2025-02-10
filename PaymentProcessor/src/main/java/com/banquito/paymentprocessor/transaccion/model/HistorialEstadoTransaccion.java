@@ -4,28 +4,34 @@ import jakarta.persistence.*;
 import jakarta.validation.constraints.*;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import java.io.Serializable;
 import java.time.LocalDateTime;
 
 @Data
 @NoArgsConstructor
 @Entity
 @Table(name = "HISTORIAL_ESTADO_TRANSACCION")
-public class HistorialEstadoTransaccion {
-    
+public class HistorialEstadoTransaccion implements Serializable {
+
+    public static final String ESTADO_PENDIENTE = "PEN";
+    public static final String ESTADO_APROBADA = "APR";
+    public static final String ESTADO_RECHAZADO_MONTO = "RECM";
+    public static final String ESTADO_RECHAZADO_BANCO = "RECB";
+    public static final String ESTADO_TRANSFERENCIA_PENDIENTE = "TRRFP";
+
     @Id
-    @Column(name = "COD_HISTORIAL_ESTADO", length = 10)
+    @Column(name = "COD_HISTORIAL_ESTADO", length = 10, nullable = false)
     private String codHistorialEstado;
 
-    @NotBlank(message = "El código de transacción no puede estar vacío")
-    @Size(max = 10, message = "El código de transacción no puede tener más de 10 caracteres")
-    @Column(name = "COD_TRANSACCION", length = 10, nullable = false)
+    @Column(name = "COD_TRANSACCION", length = 10)
     private String codTransaccion;
 
-    @NotBlank(message = "El estado no puede estar vacío")
-    @Size(max = 3, message = "El estado no puede tener más de 3 caracteres")
-    @Column(name = "ESTADO", length = 3, nullable = false)
+    @NotNull
+    @Pattern(regexp = "PEN|APR|RECM|RECB|TRRFP")
+    @Column(name = "ESTADO", length = 5, nullable = false)
     private String estado;
 
+    @NotNull
     @Column(name = "FECHA_ESTADO_CAMBIO", nullable = false)
     private LocalDateTime fechaEstadoCambio;
 
