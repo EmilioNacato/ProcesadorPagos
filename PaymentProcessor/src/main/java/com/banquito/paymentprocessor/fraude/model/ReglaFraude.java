@@ -31,7 +31,7 @@ public class ReglaFraude {
     private String tipoRegla;
 
     @DecimalMin(value = "0.0", message = "El monto límite debe ser mayor o igual a 0")
-    @Column(name = "MONTO_LIMITE", precision = 18, scale = 2)
+    @Column(name = "MONTO_LIMITE", precision = 20, scale = 2)
     private BigDecimal montoLimite;
 
     @Min(value = 0, message = "El máximo de transacciones debe ser mayor o igual a 0")
