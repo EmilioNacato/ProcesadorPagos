@@ -14,78 +14,89 @@ import java.time.LocalDateTime;
 @Table(name = "TRANSACCION")
 public class Transaccion {
     
+    public static final String MARCA_VISA = "VISA";
+    public static final String MARCA_AMEX = "AMEX";
+    public static final String MARCA_MASTERCARD = "MSCD";
+    public static final String MARCA_DINERS = "DINE";
+    
+    public static final String ESTADO_PENDIENTE = "PEN";
+    public static final String ESTADO_APROBADA = "APR";
+    public static final String ESTADO_RECHAZADA = "REC";
+
     @Id
-    @Column(name = "COD_TRANSACCION", length = 10)
+    @Column(name = "COD_TRANSACCION", length = 10, nullable = false)
     private String codTransaccion;
 
-    @NotBlank(message = "El código único no puede estar vacío")
-    @Size(max = 32, message = "El código único no puede tener más de 32 caracteres")
-    @Column(name = "CODIGO_UNICO", length = 32, nullable = false)
+    @NotNull
+    @Size(max = 64)
+    @Column(name = "CODIGO_UNICO", length = 64, nullable = false)
     private String codigoUnico;
 
-    @NotBlank(message = "El número de tarjeta no puede estar vacío")
-    @Size(max = 20, message = "El número de tarjeta no puede tener más de 20 caracteres")
+    @NotNull
+    @Size(max = 20)
     @Column(name = "NUMERO_TARJETA", length = 20, nullable = false)
     private String numeroTarjeta;
 
-    @NotNull(message = "La fecha de caducidad de la tarjeta no puede estar vacía")
+    @NotNull
     @Column(name = "FECHA_CADUCIDAD_TARJETA", nullable = false)
     private LocalDate fechaCaducidadTarjeta;
 
-    @NotNull(message = "El monto no puede estar vacío")
-    @DecimalMin(value = "0.0", message = "El monto debe ser mayor o igual a 0")
+    @NotNull
     @Column(name = "MONTO", precision = 20, scale = 2, nullable = false)
     private BigDecimal monto;
 
-    @NotBlank(message = "El código de moneda no puede estar vacío")
-    @Size(max = 3, message = "El código de moneda no puede tener más de 3 caracteres")
+    @NotNull
+    @Size(max = 3)
     @Column(name = "CODIGO_MONEDA", length = 3, nullable = false)
     private String codigoMoneda;
 
-    @NotBlank(message = "La marca no puede estar vacía")
-    @Size(max = 4, message = "La marca no puede tener más de 4 caracteres")
+    @NotNull
+    @Pattern(regexp = "VISA|AMEX|MSCD|DINE")
     @Column(name = "MARCA", length = 4, nullable = false)
     private String marca;
 
-    @NotBlank(message = "El estado no puede estar vacío")
-    @Size(max = 3, message = "El estado no puede tener más de 3 caracteres")
+    @NotNull
+    @Pattern(regexp = "PEN|APR|REC")
     @Column(name = "ESTADO", length = 3, nullable = false)
     private String estado;
 
+    @NotNull
     @Column(name = "FECHA_CREACION", nullable = false)
     private LocalDateTime fechaCreacion;
 
-    @Size(max = 30, message = "La referencia no puede tener más de 30 caracteres")
-    @Column(name = "REFERENCIA", length = 30)
+    @NotNull
+    @Size(max = 30)
+    @Column(name = "REFERENCIA", length = 30, nullable = false)
     private String referencia;
 
-    @NotBlank(message = "El país no puede estar vacío")
-    @Size(max = 2, message = "El país no puede tener más de 2 caracteres")
+    @NotNull
+    @Size(max = 2)
     @Column(name = "PAIS", length = 2, nullable = false)
     private String pais;
 
-    @NotBlank(message = "El código del banco emisor no puede estar vacío")
-    @Size(max = 20, message = "El código del banco emisor no puede tener más de 20 caracteres")
+    @NotNull
+    @Size(max = 20)
     @Column(name = "CODIGO_BANCO_EMISOR", length = 20, nullable = false)
     private String codigoBancoEmisor;
 
-    @NotBlank(message = "La cuenta del emisor no puede estar vacía")
-    @Size(max = 16, message = "La cuenta del emisor no puede tener más de 16 caracteres")
+    @NotNull
+    @Size(max = 16)
     @Column(name = "CUENTA_EMISOR", length = 16, nullable = false)
     private String cuentaEmisor;
 
-    @NotBlank(message = "El código del banco adquiriente no puede estar vacío")
-    @Size(max = 20, message = "El código del banco adquiriente no puede tener más de 20 caracteres")
+    @NotNull
+    @Size(max = 20)
     @Column(name = "CODIGO_BANCO_ADQUIRIENTE", length = 20, nullable = false)
     private String codigoBancoAdquiriente;
 
-    @NotBlank(message = "La cuenta del adquiriente no puede estar vacía")
-    @Size(max = 16, message = "La cuenta del adquiriente no puede tener más de 16 caracteres")
+    @NotNull
+    @Size(max = 16)
     @Column(name = "CUENTA_ADQUIRIENTE", length = 16, nullable = false)
     private String cuentaAdquiriente;
 
-    @Size(max = 1000, message = "La transacción encriptada no puede tener más de 1000 caracteres")
-    @Column(name = "TRANSACCION_ENCRIPTADA", length = 1000)
+    @NotNull
+    @Size(max = 1000)
+    @Column(name = "TRANSACCION_ENCRIPTADA", length = 1000, nullable = false)
     private String transaccionEncriptada;
 
     @PrePersist
